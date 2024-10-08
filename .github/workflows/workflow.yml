@@ -25,6 +25,6 @@ jobs:
         shell: bash
         env:
           RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
-      - run: echo ${{ output1 }}
+      - run: echo ${{ outputs.output1 }}
 
       
