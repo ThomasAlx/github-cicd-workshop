@@ -16,7 +16,7 @@ jobs:
     # Add step to install dependencies
     - run: |
         pip install pytest
-        pytest exercise_2/test_code.py
+        pytest exercise_2
 
   lint:
     runs-on: ubuntu-latest
