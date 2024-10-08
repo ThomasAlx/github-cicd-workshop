@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         version: ['dev', 'int', 'prd']
     environment: ${{ matrix.version }}
