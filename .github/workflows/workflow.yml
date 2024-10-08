@@ -1,0 +1,25 @@
+name: My custom action
+
+on: 
+  push:
+    branches:
+      - master
+  schedule:
+    - cron:  '*/5 * * * *'    # At every 15th minute
+
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - uses: actions/checkout@v4
+      - id: foo
+        # uses: ThomasAlx/github-cicd-workshop@SHA
+        uses: ./.github/actions/greet_people
+        with:
+          who-to-greet: 'THOMAS'
+      - run: echo random-number "$RANDOM_NUMBER"
+        shell: bash
+        env:
+          RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
