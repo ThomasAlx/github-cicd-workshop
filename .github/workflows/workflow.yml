@@ -1,31 +1,27 @@
-name: My custom action
+name: Changes badge automatically
 
-on: 
-  # push:
-  #   branches:
-  #     - master
-  schedule:
-    - cron:  '*/5 * * * *'    # At every 5th minute
-
+on:
+  pull_request:
+    branches: [master]
 
 jobs:
-  hello_world_job:
+  test:
     runs-on: ubuntu-latest
-    name: A job to say hello
-    # outputs:
-    #   output1: ${{ steps.foo.outputs.name-greeted }}
     steps:
-      - uses: actions/checkout@v4
-      - id: foo
-        # uses: ThomasAlx/github-cicd-workshop@SHA
-        uses: ./.github/actions/greet_people
-        with:
-          who-to-greet: 'THOMAS'
-      - run: echo random-number "$RANDOM_NUMBER"
-        shell: bash
-        env:
-          RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
-      - if: ${{ steps.foo.outputs.name-greeted }} == foo.who-to-greet
-        run: echo 'INPUT AND OUTPUT ARE THE SAME'
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    # Add step to install dependencies
+    - run: |
+        pip install pytest
+    - id: testing
+      run: pytest exercise_2
+      continue-on-error: true
+    - if: steps.testing.conclusion == 'success'
+      run: sed -i 's/https://img.shields.io/badge/tests-unknown-lightgrey/https://img.shields.io/badge/tests-passing-green/g' README.md
+    - if: steps.testing.conclusion == 'failure'
+      run: sed -i 's/https://img.shields.io/badge/tests-unknown-lightgrey/https://img.shields.io/badge/tests-failing-red/g' README.md
 
-      
+  
