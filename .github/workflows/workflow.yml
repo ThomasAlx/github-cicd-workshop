@@ -26,6 +26,6 @@ jobs:
         env:
           RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
       - if: ${{ steps.foo.outputs.name-greeted }} == foo.who-to-greet
-        run: echo ${{ steps.foo.outputs.name-greeted }}
+        run: echo 'INPUT AND OUTPUT ARE THE SAME'
 
       
