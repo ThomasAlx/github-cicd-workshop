@@ -19,9 +19,9 @@ jobs:
     - id: testing
       run: pytest exercise_2
       continue-on-error: true
-    - if: steps.testing.conclusion == success
+    - if: steps.testing.conclusion == 'success'
       run: sed -i 's/https://img.shields.io/badge/tests-unknown-lightgrey/https://img.shields.io/badge/tests-passing-green/g' README.md
-    - if: steps.testing.conclusion == failure
+    - if: steps.testing.conclusion == 'failure'
       run: sed -i 's/https://img.shields.io/badge/tests-unknown-lightgrey/https://img.shields.io/badge/tests-failing-red/g' README.md
 
   
