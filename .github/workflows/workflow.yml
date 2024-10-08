@@ -5,13 +5,15 @@ on:
     branches:
       - master
   schedule:
-    - cron:  '*/5 * * * *'    # At every 15th minute
+    - cron:  '*/5 * * * *'    # At every 5th minute
 
 
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: A job to say hello
+    outputs:
+      output1: ${{ steps.foo.outputs.name-greeted }}
     steps:
       - uses: actions/checkout@v4
       - id: foo
@@ -23,3 +25,6 @@ jobs:
         shell: bash
         env:
           RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
+      - run: echo ${{ output1 }}
+
+      
