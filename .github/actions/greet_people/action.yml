@@ -11,7 +11,7 @@ outputs:
     value: ${{ steps.random-number-generator.outputs.random-number }}
   name-greeted:
     description: "Name greeted"
-    value: ${{ who-to-greet }}
+    value: ${{ inputs.who-to-greet }}
 runs:
   using: "composite"
   steps:
